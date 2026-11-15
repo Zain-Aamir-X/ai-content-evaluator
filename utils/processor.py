@@ -2,6 +2,7 @@ import os
 import re
 import fitz
 import docx
+import random
 
 def extract_text_from_pdf(file_path):
     """Extracts text from a PDF file."""
@@ -69,3 +70,30 @@ def process_file(file_path):
         return None # Unsupported format
         
     return clean_extracted_text(raw_text)
+
+def mock_evaluate_text(text):
+    """
+    Simulates the ML model predictions based on Section 4.8 of the report.
+    Once Day 5 arrives, this will be replaced by actual model inference.
+    """
+    labels = ["Appropriate", "Borderline", "Inappropriate"]
+    
+    # Randomly assign labels for now to test the UI
+    return {
+        "linguistic": {
+            "label": random.choice(labels),
+            "feedback": "Vocabulary and sentence structures should be reviewed for Grade 1-3 level."
+        },
+        "cognitive": {
+            "label": random.choice(labels),
+            "feedback": "The concept density might be too high for a 5-8 year old."
+        },
+        "socio_emotional": {
+            "label": random.choice(["Appropriate", "Borderline"]), # Rarely inappropriate based on your dataset stats
+            "feedback": "The emotional tone is generally positive."
+        },
+        "moral": {
+            "label": random.choice(["Appropriate", "Borderline"]),
+            "feedback": "No explicit harmful content detected."
+        }
+    }
