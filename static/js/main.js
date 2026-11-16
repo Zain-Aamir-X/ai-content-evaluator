@@ -16,6 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. Prepare the data payload
         const formData = new FormData();
         if (fileInput) {
+            // Check file size (5MB = 5 * 1024 * 1024 bytes)
+            if (fileInput.size > 5 * 1024 * 1024) {
+                alert("Error: File is too large. Maximum size is 5MB.");
+                return;
+            }
             formData.append('file', fileInput);
         } else {
             formData.append('text', textInput);
@@ -134,4 +139,11 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         });
     });
+});
+
+document.getElementById('clearBtn').addEventListener('click', function() {
+    document.getElementById('textInput').value = '';
+    document.getElementById('fileInput').value = '';
+    document.getElementById('resultsSection').style.display = 'none';
+    document.getElementById('resultsSection').innerHTML = '';
 });

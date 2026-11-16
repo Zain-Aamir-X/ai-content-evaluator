@@ -1,12 +1,18 @@
 from flask import Flask, render_template, jsonify, request
 import os
 from werkzeug.utils import secure_filename
-
-# Import our custom modules (make sure these files exist!)
+from werkzeug.exceptions import RequestEntityTooLarge
 from utils.processor import process_file, mock_evaluate_text
 from models import db, Content, EvaluationReport
 
 app = Flask(__name__)
+
+@app.errorhandler(RequestEntityTooLarge)
+def handle_file_too_large(e):
+    return jsonify({
+        "status": "error", 
+        "message": "File is too large. Please upload a file smaller than 5MB."
+    }), 413
 
 # ==========================================
 # 1. Configuration Settings
@@ -78,6 +84,14 @@ def evaluate_content():
             
             # Process the file using utils/processor.py
             extracted_text = process_file(filepath)
+
+            if extracted_text == "ERROR_EMPTY_TEXT":
+                os.remove(filepath) # Clean up the file
+                return jsonify({
+                    "status": "error", 
+                    "message": "Could not read enough text. The file might be scanned images or empty."
+                })
+            
             source_type = "File Upload"
             
             # Delete the file after processing to save disk space

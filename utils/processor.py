@@ -67,9 +67,14 @@ def process_file(file_path):
     elif ext == '.txt':
         raw_text = extract_text_from_txt(file_path)
     else:
-        return None # Unsupported format
+        return None 
         
-    return clean_extracted_text(raw_text)
+    cleaned_text = clean_extracted_text(raw_text)
+    
+    if len(cleaned_text) < 50: 
+        return "ERROR_EMPTY_TEXT"
+        
+    return cleaned_text
 
 def mock_evaluate_text(text):
     """

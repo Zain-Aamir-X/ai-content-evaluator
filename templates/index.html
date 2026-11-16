@@ -4,60 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Content Evaluator for Early Learning</title>
-    <!-- Bootstrap CSS for quick, clean styling -->
+    
+    <!-- Bootstrap CSS for styling -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body class="bg-light">
+<body class="bg-light d-flex flex-column min-vh-100">
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-dark bg-primary">
+    <nav class="navbar navbar-dark bg-primary shadow-sm">
         <div class="container">
-            <span class="navbar-brand mb-0 h1">AI Content Evaluator</span>
+            <span class="navbar-brand mb-0 h1">
+                <strong>AI Content Evaluator</strong> <span class="fs-6 fw-normal ms-2">| Early Childhood Learning</span>
+            </span>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <div class="container mt-5">
+    <div class="container mt-5 mb-4 flex-grow-1">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h3 class="card-title text-center mb-4">Evaluate AI-Generated Educational Content</h3>
-                        <p class="text-muted text-center">Upload a PDF, Word document, or paste text to evaluate its developmental appropriateness for Grades 1-3.</p>
+            <div class="col-md-9 col-lg-8">
+                
+                <!-- Input Card -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <h3 class="card-title text-center mb-3">Evaluate Educational Content</h3>
+                        <p class="text-muted text-center mb-4">
+                            Upload a PDF, Word document, or paste text to evaluate its developmental appropriateness for children aged 5-8 (Grades 1-3).
+                        </p>
                         
-                        <!-- Input Form (Not functional yet, just UI) -->
-                        <form>
+                        <form id="evaluationForm">
+                            <!-- Text Input -->
                             <div class="mb-3">
-                                <label for="textInput" class="form-label">Paste Text Here:</label>
-                                <textarea class="form-control" id="textInput" rows="5" placeholder="Paste your AI-generated story or lesson plan here..."></textarea>
+                                <label for="textInput" class="form-label fw-bold">Paste Text Here:</label>
+                                <textarea class="form-control" id="textInput" rows="5" placeholder="Paste your AI-generated story, lesson plan, or reading passage here..."></textarea>
                             </div>
                             
-                            <div class="mb-3">
-                                <label for="fileInput" class="form-label">Or Upload a File (.pdf, .docx):</label>
+                            <!-- Divider -->
+                            <div class="text-center text-muted my-3 fw-bold">— OR —</div>
+
+                            <!-- File Input -->
+                            <div class="mb-4">
+                                <label for="fileInput" class="form-label fw-bold">Upload a File (Max 5MB):</label>
                                 <input class="form-control" type="file" id="fileInput" accept=".pdf,.docx,.txt">
+                                <div class="form-text">Supported formats: .pdf, .docx, .txt</div>
                             </div>
 
-                            <div class="d-grid">
-                                <button type="button" class="btn btn-primary btn-lg" id="submitBtn">Evaluate Content</button>
+                            <!-- Action Buttons -->
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-primary btn-lg flex-grow-1" id="submitBtn">
+                                    Evaluate Content
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary btn-lg" id="clearBtn">
+                                    Clear
+                                </button>
                             </div>
                         </form>
 
-                        <!-- Placeholder for Day 7 Results -->
+                        <!-- Results Section (Hidden by default) -->
                         <div id="resultsSection" class="mt-4" style="display: none;">
-                            <hr>
-                            <h4>Evaluation Results</h4>
-                            <p>Results will appear here.</p>
+                            <!-- Dynamic results will be injected here by main.js -->
                         </div>
 
                     </div>
                 </div>
-                <p class="text-center text-muted mt-3" style="font-size: 0.9rem;">
-                    <em>Disclaimer: This tool is advisory. Professional teacher judgment is required.</em>
-                </p>
             </div>
         </div>
     </div>
+
+    <!-- Footer & Disclaimer -->
+    <footer class="text-center mt-auto py-4 bg-white border-top">
+        <div class="container">
+            <p class="mb-1 text-muted" style="font-size: 0.95rem;">
+                <strong>Disclaimer:</strong> This tool is strictly <em>advisory</em>. It does not replace professional teacher judgment.
+            </p>
+            <p class="mb-0 text-muted" style="font-size: 0.85rem;">
+                All AI-generated content should be reviewed by an educator before classroom use. &copy; 2026 FYP Project.
+            </p>
+        </div>
+    </footer>
 
     <!-- JavaScript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
